@@ -1,0 +1,116 @@
+/*
+Copyright (c) 2013, cen (imbacen@gmail.com)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+#ifndef WINUTILS_H
+#define WINUTILS_H
+
+#pragma warning(disable: 4995)
+
+#ifndef QSTRING_H
+    #include <QString>
+#endif
+#ifndef WINDOWS_H
+    #include <windows.h>
+#endif
+#ifndef _SHLOBJ_H_
+    #include "Shlobj.h"
+#endif
+#ifndef __ATLBASE_H__
+    #include <atlbase.h>
+#endif
+#ifndef __ATLSTR_H__
+    #include <atlstr.h>
+#endif
+#ifndef _STRSAFE_H_INCLUDED_
+    #include <strsafe.h>
+#endif
+
+namespace Winutils
+{
+    inline BOOL IsWow64() {
+        typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+
+        LPFN_ISWOW64PROCESS fnIsWow64Process;
+        BOOL bIsWow64 = FALSE;
+
+        //IsWow64Process is not available on all supported versions of Windows.
+        //Use GetModuleHandle to get a handle to the DLL that contains the function
+        //and GetProcAddress to get a pointer to the function if available.
+
+        fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+            GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+
+        if(NULL != fnIsWow64Process)
+        {
+            if (!fnIsWow64Process(GetCurrentProcess(),&bIsWow64))
+            {
+                //handle error
+            }
+        }
+        return bIsWow64;
+    }
+
+    inline QString getDesktop()
+    {
+        TCHAR szPath[MAX_PATH];
+        if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_DESKTOP, NULL, 0, szPath)))
+        {
+            return QString::fromWCharArray(szPath);
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    inline QString getAppData()
+    {
+        TCHAR szPath[MAX_PATH];
+        if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath)))
+        {
+            return QString::fromWCharArray(szPath);
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    inline QString getSystem32()
+    {
+        TCHAR szPath[MAX_PATH];
+        if(SUCCEEDED(SHGetFolderPath(NULL, CSIDL_SYSTEM, NULL, 0, szPath)))
+        {
+            return QString::fromWCharArray(szPath);
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+}
+
+#endif // WINUTILS_H

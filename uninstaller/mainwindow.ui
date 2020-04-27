@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>500</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Eurobattle.net uninstall</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="uninstaller.qrc">
+    <normaloff>:/favicon.ico</normaloff>:/favicon.ico</iconset>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true">#centralWidget {
+	background-image: url(:/eb_back_small.png);
+}
+
+QLabel {
+	color: white;
+}</string>
+   </property>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>184</x>
+      <y>82</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Uninstall</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>130</y>
+      <width>461</width>
+      <height>201</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="uninstaller.qrc"/>
+ </resources>
+ <connections/>
+</ui>
