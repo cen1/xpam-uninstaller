@@ -1,0 +1,11 @@
+*.a
+*.obj
+*.user.*
+Release/
+Debug/
+release/
+debug/
+Makefile
+Makefile.Debug
+Makefile.Release
+build-uninstaller-qt5_6_2_static-Release
