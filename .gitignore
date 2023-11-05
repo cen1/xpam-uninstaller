@@ -1,6 +1,8 @@
 *.a
 *.obj
 *.user.*
+*.pro.user
+*.pro.user.old
 Release/
 Debug/
 release/
@@ -9,3 +11,5 @@ Makefile
 Makefile.Debug
 Makefile.Release
 build-uninstaller-qt5_6_2_static-Release
+build-uninstaller-qt6_static-Release
+build-uninstaller-qt6_static-Debug
